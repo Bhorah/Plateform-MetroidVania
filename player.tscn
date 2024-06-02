@@ -9,6 +9,9 @@ size = Vector2(64, 97)
 [node name="Player" type="CharacterBody2D"]
 position = Vector2(456, 312)
 script = ExtResource("1_yki2d")
+jump_height = 150.0
+jump_time_to_peak = 0.4
+jump_time_to_descent = 0.3
 metadata/_edit_group_ = true
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
