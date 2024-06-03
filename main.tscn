@@ -1,24 +1,28 @@
-[gd_scene load_steps=4 format=3 uid="uid://170lfgwcu7my"]
+[gd_scene load_steps=3 format=3 uid="uid://170lfgwcu7my"]
 
 [ext_resource type="PackedScene" uid="uid://dhyaw6jjmcx14" path="res://player.tscn" id="1_agxkn"]
-[ext_resource type="PackedScene" uid="uid://bjah1ps1oluj0" path="res://Platform.tscn" id="2_jfn0p"]
-
-[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_ea82g"]
+[ext_resource type="PackedScene" uid="uid://baq1re6s73251" path="res://map.tscn" id="1_eavec"]
 
 [node name="Main" type="Node2D"]
+position = Vector2(8, -56)
+
+[node name="TileMap" parent="." instance=ExtResource("1_eavec")]
+position = Vector2(301, 474)
+scale = Vector2(2, 2)
 
 [node name="Player" parent="." instance=ExtResource("1_agxkn")]
-position = Vector2(214, 270)
+position = Vector2(739, 717)
+scale = Vector2(1, 1)
+jump_height = 200.0
 
-[node name="Platform" parent="." instance=ExtResource("2_jfn0p")]
-position = Vector2(269, 516)
-
-[node name="Platform2" parent="." instance=ExtResource("2_jfn0p")]
-position = Vector2(775, 435)
-scale = Vector2(4.07879, 2.78882)
-physics_material_override = SubResource("PhysicsMaterial_ea82g")
-
-[node name="Platform3" parent="." instance=ExtResource("2_jfn0p")]
-position = Vector2(250, 358)
-scale = Vector2(4, 1.87)
-physics_material_override = SubResource("PhysicsMaterial_ea82g")
+[node name="Camera2D" type="Camera2D" parent="Player"]
+position = Vector2(-364, -316)
+limit_left = 0
+limit_top = -727379968
+limit_right = 727379968
+limit_bottom = 804
+limit_smoothed = true
+drag_horizontal_enabled = true
+drag_vertical_enabled = true
+editor_draw_limits = true
+editor_draw_drag_margin = true

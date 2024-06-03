@@ -29,8 +29,10 @@ func _physics_process(delta):
 	var direction = Input.get_axis("ui_left", "ui_right")
 	if direction:
 		velocity.x = direction * move_speed
+		$Sprite2D.play("Walk")
 	else:
-		velocity.x = move_toward(velocity.x, 0, move_speed/10)
+		velocity.x = move_toward(velocity.x, 0, move_speed)
+		$Sprite2D.stop()
 
 	move_and_slide()
 	
