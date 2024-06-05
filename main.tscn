@@ -1,18 +1,26 @@
-[gd_scene load_steps=3 format=3 uid="uid://170lfgwcu7my"]
+[gd_scene load_steps=6 format=3 uid="uid://170lfgwcu7my"]
 
 [ext_resource type="PackedScene" uid="uid://dhyaw6jjmcx14" path="res://player.tscn" id="1_agxkn"]
+[ext_resource type="Script" path="res://main.gd" id="1_bh46s"]
 [ext_resource type="PackedScene" uid="uid://baq1re6s73251" path="res://map.tscn" id="1_eavec"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_1cucg"]
+size = Vector2(5592, 50)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_00cgx"]
+size = Vector2(48, 1868.5)
 
 [node name="Main" type="Node2D"]
 position = Vector2(8, -56)
+script = ExtResource("1_bh46s")
 
-[node name="TileMap" parent="." instance=ExtResource("1_eavec")]
+[node name="Map" parent="." instance=ExtResource("1_eavec")]
 position = Vector2(301, 474)
 scale = Vector2(2, 2)
 
 [node name="Player" parent="." instance=ExtResource("1_agxkn")]
-position = Vector2(739, 717)
-scale = Vector2(1, 1)
+position = Vector2(678, 622)
+scale = Vector2(0.7, 0.7)
 jump_height = 200.0
 
 [node name="Camera2D" type="Camera2D" parent="Player"]
@@ -26,3 +34,16 @@ drag_horizontal_enabled = true
 drag_vertical_enabled = true
 editor_draw_limits = true
 editor_draw_drag_margin = true
+
+[node name="DeathZone" type="Area2D" parent="."]
+position = Vector2(54, 903)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="DeathZone"]
+position = Vector2(2622, 96)
+shape = SubResource("RectangleShape2D_1cucg")
+
+[node name="CollisionShape2D2" type="CollisionShape2D" parent="DeathZone"]
+position = Vector2(-200, -815)
+shape = SubResource("RectangleShape2D_00cgx")
+
+[connection signal="body_entered" from="DeathZone" to="." method="_on_death_zone_body_entered"]
