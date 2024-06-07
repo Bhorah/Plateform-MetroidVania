@@ -1,14 +1,18 @@
 extends Node2D
 
+@export var mob_scene: PackedScene
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	#$Map.hide()
-	#$Player.hide()
-	pass
+	
+	var mob = mob_scene.instantiate()
+	mob.position.x = 2964
+	mob.position.y = 758
+	mob.scale.x = 0.5
+	mob.scale.y = 0.5
+	add_child(mob)
 
-
-# Called every frame. 'delta' is the elapsed time since the previous frame.
+# Called every frame. 'delta' is the elapsed time since the previous frame.ddd
 func _process(delta):
 	pass
 

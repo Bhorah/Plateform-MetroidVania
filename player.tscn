@@ -21,6 +21,7 @@ animations = [{
 [node name="Player" type="CharacterBody2D"]
 position = Vector2(847, 605)
 scale = Vector2(0.996875, 0.995781)
+collision_layer = 2
 script = ExtResource("1_yki2d")
 jump_height = 150.0
 jump_time_to_peak = 0.4
