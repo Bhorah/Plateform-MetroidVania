@@ -21,18 +21,10 @@ func _physics_process(_delta):
 	$Sprite2D.flip_h = velocity.x < 0
 
 	move_and_slide()
-	
-	for i in get_slide_collision_count():
-		var collision = get_slide_collision(i)
-		
-		var collider = collision.get_collider()
-		if collider is Player : 
-			print ("Touché")
-		
-		
-		
-		
-	
-		
 
-		
+func _on_area_2d_area_entered(area):
+	for body in $Area2D.get_overlapping_areas():
+		if body.is_in_group("player"):
+			(body.get_parent() as Player).take_damage()
+
+

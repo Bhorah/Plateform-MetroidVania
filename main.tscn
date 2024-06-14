@@ -1,9 +1,10 @@
-[gd_scene load_steps=7 format=3 uid="uid://170lfgwcu7my"]
+[gd_scene load_steps=8 format=3 uid="uid://170lfgwcu7my"]
 
 [ext_resource type="PackedScene" uid="uid://dhyaw6jjmcx14" path="res://player.tscn" id="1_agxkn"]
 [ext_resource type="Script" path="res://main.gd" id="1_bh46s"]
 [ext_resource type="PackedScene" uid="uid://baq1re6s73251" path="res://map.tscn" id="1_eavec"]
 [ext_resource type="PackedScene" uid="uid://bslbqilydu51m" path="res://mob.tscn" id="4_l7fwt"]
+[ext_resource type="PackedScene" uid="uid://di54kbqgc4x6e" path="res://UI/ui.tscn" id="5_r6bbx"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_1cucg"]
 size = Vector2(5592, 50)
@@ -16,6 +17,10 @@ position = Vector2(8, -56)
 script = ExtResource("1_bh46s")
 mob_scene = ExtResource("4_l7fwt")
 
+[node name="UI" parent="." instance=ExtResource("5_r6bbx")]
+offset = Vector2(30, 30)
+transform = Transform2D(1, 0, 0, 1, 30, 30)
+
 [node name="Map" parent="." instance=ExtResource("1_eavec")]
 position = Vector2(301, 474)
 scale = Vector2(2, 2)
@@ -23,7 +28,9 @@ scale = Vector2(2, 2)
 [node name="Player" parent="." instance=ExtResource("1_agxkn")]
 position = Vector2(678, 622)
 scale = Vector2(0.7, 0.7)
+collision_layer = 2
 jump_height = 200.0
+health_points = 5
 
 [node name="Camera2D" type="Camera2D" parent="Player"]
 position = Vector2(-364, -316)
@@ -50,4 +57,5 @@ shape = SubResource("RectangleShape2D_1cucg")
 position = Vector2(-200, -815)
 shape = SubResource("RectangleShape2D_00cgx")
 
+[connection signal="health_diff" from="Player" to="UI" method="_on_player_health_diff"]
 [connection signal="body_entered" from="DeathZone" to="." method="_on_death_zone_body_entered"]

@@ -18,22 +18,33 @@ animations = [{
 "speed": 7.0
 }]
 
-[node name="Player" type="CharacterBody2D"]
+[node name="Player" type="CharacterBody2D" groups=["player"]]
 position = Vector2(847, 605)
 scale = Vector2(0.996875, 0.995781)
-collision_layer = 2
+collision_layer = 0
 script = ExtResource("1_yki2d")
 jump_height = 150.0
 jump_time_to_peak = 0.4
 jump_time_to_descent = 0.3
+health_points = 12
 metadata/_edit_group_ = true
 
-[node name="Sprite2D" type="AnimatedSprite2D" parent="."]
+[node name="Sprite2D" type="AnimatedSprite2D" parent="." groups=["player"]]
 position = Vector2(-362.132, -316.335)
 scale = Vector2(0.925017, 0.897466)
 sprite_frames = SubResource("SpriteFrames_cqc3a")
 animation = &"Walk"
 
-[node name="CollisionShape2D" type="CollisionPolygon2D" parent="."]
+[node name="CollisionShape2D" type="CollisionPolygon2D" parent="." groups=["player"]]
 position = Vector2(-362.132, -316.335)
 polygon = PackedVector2Array(-46.1439, -34.1437, -30.0937, -52.2199, -6.01846, -60.2538, 20.063, -57.2411, 42.132, -39.1649, 51.1602, -12.0505, 48.1508, 6.02579, 39.1226, 19.0809, 27.085, 29.1233, 18.0568, 33.1402, 17.0536, 54.2292, 11.0348, 61.2588, -2.00592, 61.2588, -13.0404, 60.2546, -19.0592, 58.2461, -20.0623, 34.1444, -38.1188, 21.0894, -49.1533, 0.000366211, -50.1564, -18.0759)
+
+[node name="Area2D" type="Area2D" parent="." groups=["player"]]
+collision_layer = 2
+collision_mask = 7
+
+[node name="CollisionShape2D" type="CollisionPolygon2D" parent="Area2D" groups=["player"]]
+position = Vector2(-362.132, -316.335)
+polygon = PackedVector2Array(-46.1439, -34.1437, -30.0937, -52.2199, -6.01846, -60.2538, 20.063, -57.2411, 42.132, -39.1649, 51.1602, -12.0505, 48.1508, 6.02579, 39.1226, 19.0809, 27.085, 29.1233, 18.0568, 33.1402, 17.0536, 54.2292, 11.0348, 61.2588, -2.00592, 61.2588, -13.0404, 60.2546, -19.0592, 58.2461, -20.0623, 34.1444, -38.1188, 21.0894, -49.1533, 0.000366211, -50.1564, -18.0759)
+
+[connection signal="area_entered" from="Area2D" to="." method="_on_area_2d_area_entered"]

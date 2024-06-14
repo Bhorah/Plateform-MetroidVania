@@ -2,7 +2,7 @@ extends CharacterBody2D
 
 class_name Player
 
-@export var move_speed = 400
+signal health_diff
 
 @export var jump_height : float
 @export var jump_time_to_peak : float
@@ -14,6 +14,9 @@ class_name Player
 
 @onready var spawnPositionX = 678
 @onready var spawnPositionY = 622
+
+@export var health_points: int
+@onready var move_speed = 400
 
 # Get the gravity from the project settings to be synced with RigidBody nodes.
 var gravity = ProjectSettings.get_setting("physics/2d/default_gravity")
@@ -45,3 +48,16 @@ func get_gravity():
 func reload_after_death():
 	get_tree().reload_current_scene()
 	
+func take_damage():
+	health_points -= 1
+	
+	emit_signal("health_diff", -1)
+	
+	if(health_points == 0):
+		die()
+		
+func die():
+	print("mort")
+	reload_after_death()
+	
+
