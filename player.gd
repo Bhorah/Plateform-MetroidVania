@@ -17,6 +17,8 @@ signal health_diff
 
 @export var health_points: int
 @onready var move_speed = 400
+@export var blink_number = 5
+
 
 # Get the gravity from the project settings to be synced with RigidBody nodes.
 var gravity = ProjectSettings.get_setting("physics/2d/default_gravity")
@@ -35,17 +37,17 @@ func _physics_process(delta):
 	var direction = Input.get_axis("move_left", "move_right")
 	if direction:
 		velocity.x = direction * move_speed
-		$Sprite2D.play("Walk")
+		$Sprite.play("Walk")
 	else:
 		velocity.x = move_toward(velocity.x, 0, move_speed)
-		$Sprite2D.stop()
+		$Sprite.stop()
 
 	move_and_slide()
 	
 func get_gravity():
 	return jump_gravity if velocity.y < 0.0 else fall_gravity
 	
-func reload_after_death():
+func reload_scene():
 	get_tree().reload_current_scene()
 	
 func take_damage():
@@ -55,9 +57,17 @@ func take_damage():
 	
 	if(health_points == 0):
 		die()
-		
-func die():
-	print("mort")
-	reload_after_death()
+	else :
+		blink()
 	
+func die():
+	reload_scene()
+	
+func blink():
+	for i in blink_number:
+		$Sprite.set_visible(!$Sprite.is_visible())
+		OS.delay_msec(5)
+	
+
+
 

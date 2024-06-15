@@ -20,4 +20,4 @@ func _process(delta):
 
 func _on_death_zone_body_entered(body):
 	$Player.queue_free()
-	$Player.reload_after_death()
+	$Player.reload_scene()
