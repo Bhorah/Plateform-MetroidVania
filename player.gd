@@ -8,6 +8,8 @@ signal health_diff
 @export var jump_time_to_peak : float
 @export var jump_time_to_descent: float
 
+# Get the gravity from the project settings to be synced with RigidBody nodes.
+var gravity = ProjectSettings.get_setting("physics/2d/default_gravity")
 @onready var jump_velocity: float = ((2.0 * jump_height) / jump_time_to_peak) * -1
 @onready var jump_gravity: float = ((-2.0 * jump_height) / (jump_time_to_peak * jump_time_to_peak)) * -1
 @onready var fall_gravity: float = ((-2.0 * jump_height) / (jump_time_to_descent * jump_time_to_descent)) * -1
@@ -15,34 +17,49 @@ signal health_diff
 @onready var spawnPositionX = 678
 @onready var spawnPositionY = 622
 
-@export var health_points: int
+static var health_points = 5
 @onready var move_speed = 400
 @export var blink_number = 5
 
+var previous_move: Vector2
+var direction:int
 
-# Get the gravity from the project settings to be synced with RigidBody nodes.
-var gravity = ProjectSettings.get_setting("physics/2d/default_gravity")
+var can_jump = true
+var coyote_timer = 0
+const MAX_COYOTE = 0.05
 
-func _physics_process(delta):	
-	# Add the gravity.
-	if not is_on_floor():
-		velocity.y += get_gravity() * delta
+func _physics_process(delta):
+	
+	check_can_jump(delta)
 
-	# Handle jump.
-	if Input.is_action_just_pressed("jump") and is_on_floor():
-		velocity.y = jump_velocity
+	if Input.is_action_just_pressed("jump") :
+		if can_jump:
+			velocity.y = jump_velocity
+		if is_on_wall_only():
+			velocity.y = jump_velocity * 0.8
+			velocity.x = direction * 1000
 
-	# Get the input direction and handle the movement/deceleration.
-	# As good practice, you should replace UI actions with custom gameplay actions.
-	var direction = Input.get_axis("move_left", "move_right")
+	direction = Input.get_axis("move_left", "move_right")
 	if direction:
 		velocity.x = direction * move_speed
 		$Sprite.play("Walk")
+		previous_move = velocity
 	else:
 		velocity.x = move_toward(velocity.x, 0, move_speed)
 		$Sprite.stop()
 
 	move_and_slide()
+	
+	
+func check_can_jump(delta):
+	if is_on_floor():
+		coyote_timer = 0
+		can_jump = true
+	else :
+		coyote_timer += delta
+		if(coyote_timer > MAX_COYOTE):
+			can_jump = false
+			velocity.y += get_gravity() * delta
 	
 func get_gravity():
 	return jump_gravity if velocity.y < 0.0 else fall_gravity
@@ -57,8 +74,6 @@ func take_damage():
 	
 	if(health_points == 0):
 		die()
-	else :
-		blink()
 	
 func die():
 	reload_scene()

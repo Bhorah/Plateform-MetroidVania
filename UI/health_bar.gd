@@ -7,13 +7,8 @@ var heart_empty = preload("res://assets/kenney_platformer-art-deluxe/Base pack/H
 
 var health
 
-# Called when the node enters the scene tree for the first time.
-func _ready():
-	null
-	
-	
-func set_health_bar(heart_count):
-	health = heart_count
+func set_health_bar():
+	health = Player.health_points
 	for i in health:
 		var heart = heart_scene.instantiate()
 		heart.texture = heart_full

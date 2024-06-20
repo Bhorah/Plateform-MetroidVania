@@ -26,7 +26,6 @@ script = ExtResource("1_yki2d")
 jump_height = 150.0
 jump_time_to_peak = 0.4
 jump_time_to_descent = 0.3
-health_points = 12
 metadata/_edit_group_ = true
 
 [node name="Sprite" type="AnimatedSprite2D" parent="." groups=["player"]]

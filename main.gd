@@ -11,7 +11,7 @@ func _ready():
 	mob.scale.y = 0.5
 	add_child(mob)
 	
-	$UI/HealthBar.set_health_bar($Player.health_points)
+	$UI/HealthBar.set_health_bar()
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.ddd
 func _process(delta):

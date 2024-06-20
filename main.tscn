@@ -30,7 +30,6 @@ position = Vector2(678, 622)
 scale = Vector2(0.7, 0.7)
 collision_layer = 2
 jump_height = 200.0
-health_points = 5
 
 [node name="Camera2D" type="Camera2D" parent="Player"]
 position = Vector2(-364, -316)
